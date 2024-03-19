@@ -5,13 +5,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  @override    
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login App',
       theme: ThemeData(
-        primarySwatch:      Colors.blue,
-      ),     
+        primarySwatch: Colors.blue,
+      ),
       home: LoginPage(),
     );
   }
@@ -46,16 +46,25 @@ class _LoginPageState extends State<LoginPage> {
                     const Text(
                       'LOGIN HERE',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 28.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 50.0),
+                    SizedBox(height: 45.0),
+                    const Text(
+                      'Enter your ID',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        hintText: '@nith.ac.in',
+                        hintText: 'e.g., @nith.ac.in',
                         hintStyle: const TextStyle(
                             color: Color.fromARGB(255, 188, 210, 228)),
                         //prefixText: '@nith.ac.in',
@@ -69,6 +78,15 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 30.0),
+                    const Text(
+                      'Enter password',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -84,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 40.0),
                     ElevatedButton(
                       onPressed: () {
                         // Perform login logic here
