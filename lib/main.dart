@@ -5,13 +5,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  @override
+  @override    
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+        primarySwatch:      Colors.blue,
+      ),     
       home: LoginPage(),
     );
   }
