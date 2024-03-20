@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Color.fromARGB(255, 188, 210, 228)),
                         filled: true,
                         fillColor:
-                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.5),
+                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.6),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -222,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Color.fromARGB(255, 188, 210, 228)),
                         filled: true,
                         fillColor:
-                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.5),
+                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.6),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
