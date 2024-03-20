@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Login App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: LoginPage(),
     );
@@ -154,9 +154,74 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/login.png',
-            fit: BoxFit.cover,
+          // Image.asset(
+          //   'assets/main login.png',
+          //   fit: BoxFit.fill,
+          // ),
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(16, 21, 33, 1),
+                  Color.fromRGBO(5, 18, 51, 0.47),
+                  // Color.fromRGBO(37, 56, 106, 0.66),
+                  // Color.fromRGBO(210, 177, 127, 0.5),
+                  // Color.fromRGBO(195, 167, 113, 0.54),
+                  Color.fromRGBO(169, 132, 88, 0.58),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            left: 0,
+            child: Image.asset(
+              'assets/Component 4.png',
+              fit: BoxFit.none,
+            ),
+          ),
+          Positioned(
+            top: 580,
+            left: 35,
+            child: Image.asset(
+              'assets/Red.png',
+            ),
+          ),
+          Positioned(
+            top: 190,
+            left: 130,
+            child: Container(
+              width: 135, // Set the desired width
+              height: 42, // Set the desired height
+              child: Image.asset(
+                'assets/login_here.png',
+                fit: BoxFit.cover, // Adjust image fit as needed
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 120,
+            left: 330,
+            child: Image.asset(
+              'assets/Lime.png',
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Image.asset(
+              'assets/Component 3.png',
+            ),
+          ),
+          Positioned(
+            top: 60,
+            left: 30,
+            child: Image.asset(
+              'assets/Group.png',
+            ),
           ),
           Center(
             child: SingleChildScrollView(
@@ -167,14 +232,6 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     // SizedBox(height: 0),
 
-                    const Text(
-                      'LOGIN HERE',
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
                     SizedBox(height: 60.0),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -195,8 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                         hintStyle: const TextStyle(
                             color: Color.fromARGB(255, 188, 210, 228)),
                         filled: true,
-                        fillColor:
-                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.6),
+                        fillColor: Color.fromRGBO(45, 54, 81, 1),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -223,8 +279,7 @@ class _LoginPageState extends State<LoginPage> {
                         hintStyle: const TextStyle(
                             color: Color.fromARGB(255, 188, 210, 228)),
                         filled: true,
-                        fillColor:
-                            Color.fromARGB(255, 28, 11, 97).withOpacity(0.6),
+                        fillColor: Color.fromRGBO(45, 54, 81, 1),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -235,8 +290,24 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // Perform login logic here
                       },
-                      child: Text('Submit'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(17, 24, 40, 1),
+                        ),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          Size(200, 50), // Change button size here
+                        ),
+                      ),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
+
                     SizedBox(height: 80),
                   ],
                 ),
