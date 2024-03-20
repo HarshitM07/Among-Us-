@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
         fit: StackFit.expand,
         children: [
           // Image.asset(
-          //   'assets/main login.png',
-          //   fit: BoxFit.fill,
+          //   'assets/login (2).png',
+          //   fit: BoxFit.cover,
           // ),
           Container(
             decoration: const BoxDecoration(
