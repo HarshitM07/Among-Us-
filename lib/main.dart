@@ -161,10 +161,12 @@ class _LoginPageState extends State<LoginPage> {
           Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(30.0),
+                padding: EdgeInsets.all(38.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // SizedBox(height: 0),
+
                     const Text(
                       'LOGIN HERE',
                       style: TextStyle(
@@ -235,6 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text('Submit'),
                     ),
+                    SizedBox(height: 80),
                   ],
                 ),
               ),
