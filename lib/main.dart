@@ -167,12 +167,24 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 40.0),
                     ElevatedButton(
                       onPressed: () {
-                        // Perform login logic here
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NameYourTeam()),
-                        );
+                        // Perform validation before navigating
+                        if (_emailController.text.isEmpty ||
+                            _passwordController.text.isEmpty) {
+                          // Show a snackbar or any other feedback to inform the user about the missing fields
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('Please enter both ID and password.'),
+                            ),
+                          );
+                        } else {
+                          // If both fields are not empty, navigate to the next screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NameYourTeam()),
+                          );
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
