@@ -23,49 +23,54 @@ class _NameYourTeamState extends State<NameYourTeam> {
       Padding(
         padding: EdgeInsets.all(45.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            // Positioned(
+            //   top: 100,
+            //   left: 0,
+            //   child: Container(
+            //     width: 257, // Set the desired width
+            //     height: 33, // Set the desired height
+            //     child: Image.asset(
+            //       'assets/NAME YOUR CREW.png',
+            //       fit: BoxFit.cover, // Adjust image fit as needed
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 20),
+            // Positioned(
+            //   top: 20,
+            //   left: 0,
+            //   child: Container(
+            //     width: 162, // Set the desired width
+            //     height: 149, // Set the desired height
+            //     child: Image.asset(
+            //       'assets/Group 5.png',
+            //       fit: BoxFit.cover, // Adjust image fit as needed
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: 300),
             Positioned(
-              top: 20,
+              top: 0,
               left: 0,
-              child: Container(
-                width: 257, // Set the desired width
-                height: 33, // Set the desired height
-                child: Image.asset(
-                  'assets/NAME YOUR CREW.png',
-                  fit: BoxFit.cover, // Adjust image fit as needed
+              child: TextField(
+                controller: _teamNameController,
+                decoration: InputDecoration(
+                  hintText: 'Team Name',
+                  hintStyle:
+                      const TextStyle(color: Color.fromARGB(255, 10, 15, 19)),
+                  filled: true,
+                  fillColor: Color.fromRGBO(228, 223, 174, 1),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  // border: OutlineInputBorder(),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Positioned(
-              top: 20,
-              left: 0,
-              child: Container(
-                width: 162, // Set the desired width
-                height: 149, // Set the desired height
-                child: Image.asset(
-                  'assets/Group 5.png',
-                  fit: BoxFit.cover, // Adjust image fit as needed
-                ),
-              ),
-            ),
-            SizedBox(height: 50),
-            TextField(
-              controller: _teamNameController,
-              decoration: InputDecoration(
-                hintText: 'Team Name',
-                hintStyle:
-                    const TextStyle(color: Color.fromARGB(255, 10, 15, 19)),
-                filled: true,
-                fillColor: Color.fromRGBO(228, 223, 174, 1),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                // border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 35),
+
+            SizedBox(height: 0),
             TextField(
               controller: _teamCodeController,
               decoration: InputDecoration(
@@ -80,7 +85,7 @@ class _NameYourTeamState extends State<NameYourTeam> {
                 // border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 // Implement your ready to play logic here
@@ -95,6 +100,7 @@ class _NameYourTeamState extends State<NameYourTeam> {
                 ),
               ),
             ),
+            SizedBox(height: 100),
           ],
         ),
       ),
