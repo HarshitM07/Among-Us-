@@ -178,11 +178,32 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         } else {
-                          // If both fields are not empty, navigate to the next screen
+                          // If both fields are not empty, navigate to the next screen with animation
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => NameYourTeam()),
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 500),
+                              transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return ScaleTransition(
+                                  scale: Tween<double>(
+                                    begin: 0.0,
+                                    end: 1.0,
+                                  ).animate(CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.fastOutSlowIn,
+                                  )),
+                                  child: child,
+                                );
+                              },
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return NameYourTeam();
+                              },
+                            ),
                           );
                         }
                       },
