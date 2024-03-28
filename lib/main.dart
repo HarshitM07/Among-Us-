@@ -33,75 +33,75 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Image.asset(
-          //   'assets/main login.png',
-          //   fit: BoxFit.fill,
+          Image.asset(
+            'assets/login (2).png',
+            fit: BoxFit.cover,
+          ),
+          // Container(
+          //   decoration: const BoxDecoration(
+          //     gradient: LinearGradient(
+          //       begin: Alignment.topCenter,
+          //       end: Alignment.bottomCenter,
+          //       colors: [
+          //         Color.fromRGBO(16, 21, 33, 1),
+          //         Color.fromRGBO(5, 18, 51, 0.47),
+          //         // Color.fromRGBO(37, 56, 106, 0.66),
+          //         // Color.fromRGBO(210, 177, 127, 0.5),
+          //         // Color.fromRGBO(195, 167, 113, 0.54),
+          //         Color.fromRGBO(169, 132, 88, 0.58),
+          //       ],
+          //     ),
+          //   ),
           // ),
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromRGBO(16, 21, 33, 1),
-                  Color.fromRGBO(5, 18, 51, 0.47),
-                  // Color.fromRGBO(37, 56, 106, 0.66),
-                  // Color.fromRGBO(210, 177, 127, 0.5),
-                  // Color.fromRGBO(195, 167, 113, 0.54),
-                  Color.fromRGBO(169, 132, 88, 0.58),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 20,
-            left: 0,
-            child: Image.asset(
-              'assets/Component 4.png',
-              fit: BoxFit.none,
-            ),
-          ),
-          Positioned(
-            top: 580,
-            left: 35,
-            child: Image.asset(
-              'assets/Red.png',
-            ),
-          ),
-          Positioned(
-            top: 190,
-            left: 130,
-            child: Container(
-              width: 135, // Set the desired width
-              height: 42, // Set the desired height
-              child: Image.asset(
-                'assets/login_here.png',
-                fit: BoxFit.cover, // Adjust image fit as needed
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 20,
+          //   left: 0,
+          //   child: Image.asset(
+          //     'assets/Component 4.png',
+          //     fit: BoxFit.none,
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 580,
+          //   left: 35,
+          //   child: Image.asset(
+          //     'assets/Red.png',
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 190,
+          //   left: 130,
+          //   child: Container(
+          //     width: 135, // Set the desired width
+          //     height: 42, // Set the desired height
+          //     child: Image.asset(
+          //       'assets/login_here.png',
+          //       fit: BoxFit.cover, // Adjust image fit as needed
+          //     ),
+          //   ),
+          // ),
 
-          Positioned(
-            top: 120,
-            left: 330,
-            child: Image.asset(
-              'assets/Lime.png',
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Image.asset(
-              'assets/Component 3.png',
-            ),
-          ),
-          Positioned(
-            top: 40,
-            left: 30,
-            child: Image.asset(
-              'assets/Group.png',
-            ),
-          ),
+          // Positioned(
+          //   top: 120,
+          //   left: 330,
+          //   child: Image.asset(
+          //     'assets/Lime.png',
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   child: Image.asset(
+          //     'assets/Component 3.png',
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 40,
+          //   left: 30,
+          //   child: Image.asset(
+          //     'assets/Group.png',
+          //   ),
+          // ),
           Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -178,11 +178,32 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         } else {
-                          // If both fields are not empty, navigate to the next screen
+                          // If both fields are not empty, navigate to the next screen with animation
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => NameYourTeam()),
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 500),
+                              transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return ScaleTransition(
+                                  scale: Tween<double>(
+                                    begin: 0.0,
+                                    end: 1.0,
+                                  ).animate(CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.fastOutSlowIn,
+                                  )),
+                                  child: child,
+                                );
+                              },
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return NameYourTeam();
+                              },
+                            ),
                           );
                         }
                       },
