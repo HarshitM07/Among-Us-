@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreServices {
-  var users = FirebaseFirestore.instance.collection("users");
-  var teamPlayer = FirebaseFirestore.instance.collection("team_players");
+  var teams = FirebaseFirestore.instance.collection('Teams');
+  var allplayers = FirebaseFirestore.instance.collection("AllPlayers");
 
   // Future<void> addUsersData(String name, String age, String gender,
   //     String contactNo, String address, String email) {
@@ -17,28 +17,33 @@ class FirestoreServices {
   //   });
   // }
 
+  Future<String> addPlayerToGame(
+      String name, String email, String teamName, String character) async {
+    try {
+      allplayers.add({
+        "Name": name,
+        "Email": email,
+        "Character": character,
+        "TeamName": teamName
+      });
+
+      return "success";
+    } catch (e) {
+      return "Can't join : $e";
+    }
+  }
+
   Future<String> addPlayerToTeam(
       String teamId, String name, String email) async {
     try {
-      var players = await FirebaseFirestore.instance
-          .collection('teams')
-          .doc(teamId)
-          .collection('players')
-          .get();
-
+      var players = await teams.doc(teamId).collection('players').get();
       int noOfPlayers = players.size;
-
-      var teams = FirebaseFirestore.instance.collection('teams');
-
-      await users.where('Email', isEqualTo: email).limit(1).get();
 
       if (noOfPlayers < 4) {
         // Get reference to Firestore collection "teams"
-        CollectionReference teamsRef =
-            FirebaseFirestore.instance.collection('teams');
 
         // Get reference to the specific team document
-        DocumentReference teamDocRef = teamsRef.doc(teamId);
+        DocumentReference teamDocRef = teams.doc(teamId);
 
         // Add the player to the "players" subcollection of the team
 
@@ -58,14 +63,14 @@ class FirestoreServices {
     }
   }
 
-  Future<Map<String, dynamic>?> getUserByEmail(String email) async {
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await users.where('Email', isEqualTo: email).limit(1).get();
+  // Future<Map<String, dynamic>?> getUserByEmail(String email) async {
+  //   QuerySnapshot<Map<String, dynamic>> querySnapshot =
+  //       await users.where('Email', isEqualTo: email).limit(1).get();
 
-    if (querySnapshot.docs.isNotEmpty) {
-      return querySnapshot.docs.first.data();
-    } else {
-      return null;
-    }
-  }
+  //   if (querySnapshot.docs.isNotEmpty) {
+  //     return querySnapshot.docs.first.data();
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }

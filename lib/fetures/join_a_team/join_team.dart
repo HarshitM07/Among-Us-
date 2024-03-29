@@ -20,7 +20,7 @@ class JoinTeamScreen extends StatefulWidget {
 
 class _JoinTeamScreenState extends State<JoinTeamScreen> {
   final TextEditingController _playerNameController = TextEditingController();
-  final TextEditingController _teamCodeController = TextEditingController();
+  final TextEditingController _teamNameController = TextEditingController();
 
   bool loading = false;
 
@@ -62,9 +62,9 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
-                    controller: _teamCodeController,
+                    controller: _teamNameController,
                     decoration: InputDecoration(
-                      hintText: 'Team Code',
+                      hintText: 'Team Name (e.g. TattiTeam )',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(110, 10, 15, 19),
                       ),
@@ -79,11 +79,11 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_playerNameController.text.isEmpty ||
-                          _teamCodeController.text.isEmpty) {
+                          _teamNameController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              'Please enter both Team Name and Team Code.',
+                              'Please enter both Your Name and Team Name.',
                             ),
                           ),
                         );
@@ -92,7 +92,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                           loading = true;
                         });
                         String res = await FirestoreServices().addPlayerToTeam(
-                            _teamCodeController.text,
+                            _teamNameController.text,
                             _playerNameController.text,
                             FirebaseAuth.instance.currentUser!.email!);
 
@@ -101,7 +101,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => LobbyScreen(
-                                teamId: _teamCodeController.text,
+                                teamId: _teamNameController.text,
                               ),
                             ),
                             (route) => true,
