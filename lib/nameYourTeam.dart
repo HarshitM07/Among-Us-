@@ -60,7 +60,7 @@ class _NameYourTeamState extends State<NameYourTeam> {
                     // border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 0),
                 ElevatedButton(
                   onPressed: () {
                     // Perform validation before navigating
