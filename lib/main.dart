@@ -1,4 +1,4 @@
-import 'package:among_us2/fetures/home/home_screen.dart';
+import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/landing/screen/landing_page.dart';
 import 'package:among_us2/fetures/verify_email/verify_email_screen.dart';
 import 'package:among_us2/firebase_options.dart';
@@ -58,7 +58,7 @@ void main() async {
               if (isemailVerified) {
                 //TODO
 
-                return const HomeScreen();
+                return const JoinTeamScreen();
               } else {
                 return const VerifyEmail();
               }

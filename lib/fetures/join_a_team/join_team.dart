@@ -1,7 +1,11 @@
 import 'package:among_us2/fetures/lobby/lobby.dart';
+import 'package:among_us2/services/firestore_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
+  Firebase.initializeApp();
   runApp(const MaterialApp(
     home: JoinTeamScreen(),
   ));
@@ -15,8 +19,10 @@ class JoinTeamScreen extends StatefulWidget {
 }
 
 class _JoinTeamScreenState extends State<JoinTeamScreen> {
-  final TextEditingController _teamNameController = TextEditingController();
+  final TextEditingController _playerNameController = TextEditingController();
   final TextEditingController _teamCodeController = TextEditingController();
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                     height: 18,
                   ),
                   TextField(
-                    controller: _teamNameController,
+                    controller: _playerNameController,
                     decoration: InputDecoration(
                       hintText: 'Your Name',
                       hintStyle: const TextStyle(
@@ -71,8 +77,8 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {
-                      if (_teamNameController.text.isEmpty ||
+                    onPressed: () async {
+                      if (_playerNameController.text.isEmpty ||
                           _teamCodeController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -82,12 +88,35 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                           ),
                         );
                       } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LobbyScreen(),
-                          ),
-                        );
+                        setState(() {
+                          loading = true;
+                        });
+                        String res = await FirestoreServices().addPlayerToTeam(
+                            _teamCodeController.text,
+                            _playerNameController.text,
+                            FirebaseAuth.instance.currentUser!.email!);
+
+                        if (res == "success") {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LobbyScreen(
+                                teamId: _teamCodeController.text,
+                              ),
+                            ),
+                            (route) => true,
+                          );
+                          setState(() {
+                            loading = false;
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(res)));
+
+                          setState(() {
+                            loading = false;
+                          });
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -100,10 +129,14 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text(
-                      'Ready to play',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: loading == false
+                        ? const Text(
+                            'Ready to play',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : const CircularProgressIndicator(
+                            color: Color.fromRGBO(228, 223, 174, 1),
+                          ),
                   ),
                   const SizedBox(height: 100),
                 ],

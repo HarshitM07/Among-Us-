@@ -1,4 +1,4 @@
-import 'package:among_us2/fetures/home/home_screen.dart';
+import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/landing/forget_password.dart';
 import 'package:among_us2/fetures/signup/screen/signup_page.dart';
 import 'package:among_us2/services/firebase_services.dart';
@@ -67,7 +67,7 @@ class LandingPage extends StatelessWidget {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const JoinTeamScreen(),
                                 ),
                                 (route) => false);
                           } else {

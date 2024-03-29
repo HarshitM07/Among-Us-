@@ -2,18 +2,60 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreServices {
   var users = FirebaseFirestore.instance.collection("users");
+  var teamPlayer = FirebaseFirestore.instance.collection("team_players");
 
-  Future<void> addUsersData(String name, String age, String gender,
-      String contactNo, String address, String email) {
-    return users.add({
-      "Name": name,
-      "Age": age,
-      "Gender": gender,
-      "ContactNo": contactNo,
-      "Address": address,
-      "Email": email,
-      "timestamp": Timestamp.now(),
-    });
+  // Future<void> addUsersData(String name, String age, String gender,
+  //     String contactNo, String address, String email) {
+  //   return users.add({
+  //     "Name": name,
+  //     "Age": age,
+  //     "Gender": gender,
+  //     "ContactNo": contactNo,
+  //     "Address": address,
+  //     "Email": email,
+  //     "timestamp": Timestamp.now(),
+  //   });
+  // }
+
+  Future<String> addPlayerToTeam(
+      String teamId, String name, String email) async {
+    try {
+      var players = await FirebaseFirestore.instance
+          .collection('teams')
+          .doc(teamId)
+          .collection('players')
+          .get();
+
+      int noOfPlayers = players.size;
+
+      var teams = FirebaseFirestore.instance.collection('teams');
+
+      await users.where('Email', isEqualTo: email).limit(1).get();
+
+      if (noOfPlayers < 4) {
+        // Get reference to Firestore collection "teams"
+        CollectionReference teamsRef =
+            FirebaseFirestore.instance.collection('teams');
+
+        // Get reference to the specific team document
+        DocumentReference teamDocRef = teamsRef.doc(teamId);
+
+        // Add the player to the "players" subcollection of the team
+
+        await teamDocRef.collection('players').doc(email).set({
+          'name': name,
+          'email': email,
+        });
+
+        return "success";
+      } else {
+        return "This lobby alredy have 4 Players ";
+      }
+    } catch (e) {
+      print('Error adding player to team: $e');
+      // Handle error accordingly
+      return "Error try again : $e";
+    }
   }
 
   Future<Map<String, dynamic>?> getUserByEmail(String email) async {
