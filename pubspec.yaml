@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   geolocator: ^11.0.0
   sliding_sheet2: ^2.0.1
+  firebase_core: ^2.27.2
+  cloud_firestore: ^4.15.5
+  firebase_auth: ^4.17.5
 
 dev_dependencies:
   flutter_test:
@@ -63,17 +66,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   #  - assets/login.png
-    - assets/Red.png
-    - assets/login_here.png
-    - assets/Component 3.png
-    - assets/Lime.png
-    - assets/login (2).png
-    - assets/main login.png
-    - assets/Component 4.png
-    - assets/Group.png
-    - assets/NAME YOUR CREW.png
-    - assets/Group 5.png
-    - assets/NameYourTeam (1).png
+    - assets/
   #- assets/Component5(1).png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

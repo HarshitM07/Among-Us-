@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1009487601323",
+    "project_id": "amongusgdsc",
+    "storage_bucket": "amongusgdsc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009487601323:android:1fe67d7a3bda2d35e4e1ee",
+        "android_client_info": {
+          "package_name": "com.example.among_us2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEltUwA4_OujoKlajRjt30v8ZUnxpsmKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
