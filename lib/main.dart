@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:among_us2/nameYourTeam.dart';
+import 'package:among_us2/fetures/name_your_team/nameYourTeam.dart';
 
 void main() {
   runApp(MyApp());
