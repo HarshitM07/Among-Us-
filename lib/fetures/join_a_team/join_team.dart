@@ -37,24 +37,29 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
               child: Text("Logout"))
         ],
       ),
-      backgroundColor: const Color(0xffFFF9DB),
+      backgroundColor: const Color.fromRGBO(255, 249, 219, 1),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(45.0),
+              padding: const EdgeInsets.all(35.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Image.asset("assets/NAME YOUR CREW.png"),
+                  SizedBox(height: 50),
                   Image.asset(
                     "assets/group.png",
-                    height: 200,
+                    height: 170,
                   ),
                   const SizedBox(
-                    height: 18,
+                    height: 40,
                   ),
                   TextField(
                     controller: _playerNameController,
@@ -64,13 +69,13 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                         color: Color.fromARGB(107, 10, 15, 19),
                       ),
                       filled: true,
-                      fillColor: const Color.fromRGBO(228, 223, 174, 1),
+                      fillColor: const Color.fromRGBO(228, 213, 174, 1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
                   TextField(
                     controller: _teamNameController,
                     decoration: InputDecoration(
@@ -79,13 +84,13 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                         color: Color.fromARGB(110, 10, 15, 19),
                       ),
                       filled: true,
-                      fillColor: const Color.fromRGBO(228, 223, 174, 1),
+                      fillColor: const Color.fromRGBO(228, 213, 174, 1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 35),
                   ElevatedButton(
                     onPressed: () async {
                       if (_playerNameController.text.isEmpty ||

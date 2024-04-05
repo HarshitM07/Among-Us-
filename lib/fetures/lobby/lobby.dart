@@ -53,10 +53,10 @@ class LobbyScreen extends StatelessWidget {
             ),
             Image.asset(
               "assets/group.png",
-              height: 200,
+              height: 210,
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             ElevatedButton(onPressed: null, child: Text("Team Name : $teamId")),
             StreamBuilder(
@@ -85,7 +85,7 @@ class LobbyScreen extends StatelessWidget {
                 players = snapshot.data!.docs.length;
 
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Expanded(
                     child: SizedBox(
                       height: 400,
