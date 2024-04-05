@@ -114,23 +114,45 @@ class LandingPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text('Do not have a account ?'),
-                  SizedBox(width: 5), // Adjust the spacing between texts
-                  GestureDetector(
-                    onTap: () {
-                      // Handle navigation to sign-up page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (ctx) => SignUp()),
-                      );
-                    },
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+                  // const Text('Do not have a account ?'),
+                  // SizedBox(width: 5), // Adjust the spacing between texts
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // Handle navigation to sign-up page
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (ctx) => SignUp()),
+                  //     );
+                  //   },
+                  //   child: Text(
+                  //     'Sign Up',
+                  //     style: TextStyle(
+                  //       color: Colors.blue,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Do not have an account?'),
+                      GestureDetector(
+                        onTap: () {
+                          // Handle navigation to sign-up page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (ctx) => SignUp()),
+                          );
+                        },
+                        child: Text(
+                          ' Sign Up',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),

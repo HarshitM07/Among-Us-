@@ -116,46 +116,30 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text('Already have an account ?'),
-                // const SizedBox(height: 10),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 44,
-                //   child: ElevatedButton(
-                //     onPressed: () {
-                //       // Handle register logic here
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (ctx) => LandingPage()));
-                //     },
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: Colors.black,
-                //       shape: const RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.zero,
-                //       ),
-                //     ),
-                //     child: const Text(
-                //       'LogIn',
-                //       style: TextStyle(color: Colors.white),
-                //     ),
-                //   ),
-                // ),
-                SizedBox(width: 5), // Adjust the spacing between texts
-                GestureDetector(
-                  onTap: () {
-                    // Handle navigation to sign-up page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (ctx) => LandingPage()),
-                    );
-                  },
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already have an account ?'),
+
+                    SizedBox(width: 5), // Adjust the spacing between texts
+                    GestureDetector(
+                      onTap: () {
+                        // Handle navigation to sign-up page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (ctx) => LandingPage()),
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  ],
+                )
               ],
             ),
           ),
