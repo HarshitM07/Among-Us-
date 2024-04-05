@@ -17,7 +17,7 @@ class LobbyScreen extends StatelessWidget {
           onPressed: () {
             if (players >= 4) {
               //TODO
-              RandomImpostorOrCrewmateGen().impostorOrCrewmate();
+              //RandomImpostorOrCrewmateGen().impostorOrCrewmate();
 
               Navigator.pushAndRemoveUntil(
                   context,

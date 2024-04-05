@@ -1,3 +1,4 @@
+import 'package:among_us2/fetures/home/home_screen.dart';
 import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/landing/forget_password.dart';
 import 'package:among_us2/fetures/signup/screen/signup_page.dart';
@@ -22,7 +23,7 @@ class LandingPage extends StatelessWidget {
           key: _formKey,
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -112,36 +113,22 @@ class LandingPage extends StatelessWidget {
                           ))
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  const Text('Do not have a account ?'),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 44,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle register logic here
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (ctx) => SignUp()));
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromRGBO(17, 24, 40, 1),
-                        ),
-                        fixedSize: MaterialStateProperty.all<Size>(
-                          const Size(200, 50), // Change button size here
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                10), // Adjust the radius as needed
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.white),
+                  const Text('Do not have a account ?'),
+                  SizedBox(width: 5), // Adjust the spacing between texts
+                  GestureDetector(
+                    onTap: () {
+                      // Handle navigation to sign-up page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (ctx) => SignUp()),
+                      );
+                    },
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

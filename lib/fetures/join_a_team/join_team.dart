@@ -1,4 +1,5 @@
 import 'package:among_us2/fetures/lobby/lobby.dart';
+import 'package:among_us2/services/firebase_services.dart';
 import 'package:among_us2/services/firestore_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,15 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                FirebaseServices().logOut(context);
+              },
+              child: Text("Logout"))
+        ],
+      ),
       backgroundColor: const Color(0xffFFF9DB),
       body: SingleChildScrollView(
         child: Column(
