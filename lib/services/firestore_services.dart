@@ -54,7 +54,24 @@ class FirestoreServices {
 
         return "success";
       } else {
-        return "This lobby alredy have 4 Players ";
+        var teamPlayerRef =
+            await teams.doc(teamId).collection('players').doc(email).get();
+        print("email $email");
+        if (teamPlayerRef.exists) {
+          print("andar aa agaya .........");
+          DocumentReference teamDocRef = teams.doc(teamId);
+
+          // Add the player to the "players" subcollection of the team
+
+          await teamDocRef.collection('players').doc(email).set({
+            'name': name,
+            'email': email,
+          });
+
+          return "success";
+        } else {
+          return "This lobby alredy have 4 Players  ";
+        }
       }
     } catch (e) {
       print('Error adding player to team: $e');

@@ -1,4 +1,5 @@
 import 'package:among_us2/fetures/lobby/lobby.dart';
+import 'package:among_us2/main.dart';
 import 'package:among_us2/services/firestore_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -92,16 +93,18 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                           loading = true;
                         });
                         String res = await FirestoreServices().addPlayerToTeam(
-                            _teamNameController.text,
-                            _playerNameController.text,
+                            _teamNameController.text.trim(),
+                            _playerNameController.text.trim(),
                             FirebaseAuth.instance.currentUser!.email!);
 
                         if (res == "success") {
+                          GlobalteamName = _teamNameController.text;
+
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (context) => LobbyScreen(
-                                teamId: _teamNameController.text,
+                                teamName: _teamNameController.text,
                               ),
                             ),
                             (route) => true,

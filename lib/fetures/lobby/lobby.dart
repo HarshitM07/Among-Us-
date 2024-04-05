@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LobbyScreen extends StatelessWidget {
-  LobbyScreen({super.key, required this.teamId});
-  String teamId;
+  LobbyScreen({super.key, required this.teamName});
+  String teamName;
   int players = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,15 +15,19 @@ class LobbyScreen extends StatelessWidget {
         elevation: 0,
         color: const Color.fromARGB(0, 0, 0, 0),
         child: ElevatedButton(
-          onPressed: () {
-            if (players >= 4) {
+          onPressed: () async {
+            if (players == 4) {
               //TODO
-              RandomImpostorOrCrewmateGen().impostorOrCrewmate();
+              String res = await RandomImpostorOrCrewmateGen(teamName: teamName)
+                  .impostorOrCrewmate();
 
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (ctx) => const WaitingScreen()),
-                  (route) => false);
+              if (res == "success") {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => const WaitingScreen()));
+              } else {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(res)));
+              }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("You need 4 players to Join the game ")));
@@ -58,11 +63,12 @@ class LobbyScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(onPressed: null, child: Text("Team Name : $teamId")),
+            ElevatedButton(
+                onPressed: null, child: Text("Team Name : $teamName")),
             StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('Teams')
-                  .doc(teamId)
+                  .doc(teamName)
                   .collection('players')
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -83,7 +89,6 @@ class LobbyScreen extends StatelessWidget {
                 }
 
                 players = snapshot.data!.docs.length;
-
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Expanded(

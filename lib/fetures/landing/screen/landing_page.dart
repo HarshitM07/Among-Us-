@@ -126,7 +126,7 @@ class LandingPage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromRGBO(17, 24, 40, 1),
+                          const Color.fromARGB(255, 119, 134, 170),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 50), // Change button size here

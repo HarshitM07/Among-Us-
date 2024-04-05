@@ -1,4 +1,5 @@
-import 'package:among_us2/fetures/batch_allocation_screen/batch_allocation.dart';
+import 'package:among_us2/fetures/home/home_screen.dart';
+import 'package:among_us2/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,9 @@ class WaitingScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                  builder: (ctx) => const BatchAllocationScreen()),
+                  builder: (ctx) => HomeScreen(
+                        teamName: GlobalteamName,
+                      )),
               (route) => false);
           return const Placeholder();
         }

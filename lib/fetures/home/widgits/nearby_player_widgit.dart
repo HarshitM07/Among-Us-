@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class NearbyPlayersListWidgit extends StatefulWidget {
@@ -9,6 +10,9 @@ class NearbyPlayersListWidgit extends StatefulWidget {
 }
 
 class _NearbyPlayersListWidgitState extends State<NearbyPlayersListWidgit> {
+  var allplayersLocationstream =
+      FirebaseFirestore.instance.collection("Locations").snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,18 +30,22 @@ class _NearbyPlayersListWidgitState extends State<NearbyPlayersListWidgit> {
                     color: Colors.black),
               )),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: const Text("Player Name"),
-                trailing:
-                    ElevatedButton(onPressed: () {}, child: const Text("KILL")),
-              );
-            },
-          ),
-        ),
+        StreamBuilder(
+          stream: allplayersLocationstream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              int noOfTeams = snapshot.data!.size;
+
+              if (noOfTeams == 1) {
+                return const Text("No players in the game other then you!! ");
+              } else {
+                return const Text("Kuch to h beta ");
+              }
+            } else {
+              return const Text("No player Close yet !! ");
+            }
+          },
+        )
       ],
     );
   }

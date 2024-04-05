@@ -8,10 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
-var socket;
+late String GlobalteamName;
 void main() async {
-  Map<String, dynamic>? userData;
-
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -52,12 +50,7 @@ void main() async {
               bool isemailVerified =
                   FirebaseAuth.instance.currentUser!.emailVerified;
 
-              print(isemailVerified);
-              print(FirebaseAuth.instance.currentUser!.email);
-
               if (isemailVerified) {
-                //TODO
-
                 return const JoinTeamScreen();
               } else {
                 return const VerifyEmail();
