@@ -35,20 +35,77 @@ class FirestoreServices {
   //   });
   // }
 
-  Future<String> addPlayerToGame(
-      String name, String email, String teamName, String character) async {
-    try {
-      allplayers.add({
-        "Name": name,
-        "Email": email,
-        "Character": character,
-        "TeamName": teamName,
-        "isAlive": true
-      });
+  // Future<String> addPlayerToGame(
+  //     String name, String email, String teamName, String character) async {
+  //   try {
+  //     allplayers.add({
+  //       "Name": name,
+  //       "Email": email,
+  //       "Character": character,
+  //       "TeamName": teamName,
+  //       "isAlive": true
+  //     });
 
-      return "success";
+  //     return "success";
+  //   } catch (e) {
+  //     return "Can't join : $e";
+  //   }
+  // }
+
+  Future<bool> isPlayerAlive(String email) async {
+    try {
+      // Query Firestore to get player's document based on email
+      var playerDoc = await allplayers.doc(email).get();
+
+      // Check if the document exists and retrieve the 'isAlive' field
+      if (playerDoc.exists) {
+        bool isAlive = playerDoc.data()?['IsAlive'];
+        return isAlive;
+      } else {
+        // Player document not found, assume player is dead
+        return false;
+      }
     } catch (e) {
-      return "Can't join : $e";
+      // Error occurred while fetching player status
+      print('Error checking player status: $e');
+      return false; // Assume player is dead on error
+    }
+  }
+
+  //   Future<String> playerTeam(String email) async {
+  //   try {
+  //     // Query Firestore to get player's document based on email
+  //     var playerDoc = await allplayers.doc(email).get();
+
+  //     // Check if the document exists and retrieve the 'isAlive' field
+  //       String team = playerDoc.data()?['TeamName'];
+  //       return team;
+
+  //   } catch (e) {
+  //     // Error occurred while fetching player status
+  //     print('Error checking player status: $e');
+  //     return false; // Assume player is dead on error
+  //   }
+  // }
+
+  Future<bool> isPlayerAliveImposter(String email) async {
+    try {
+      // Query Firestore to get player's document based on email
+      var playerDoc = await allplayers.doc(email).get();
+
+      // Check if the document exists and retrieve the 'isAlive' field
+      if (playerDoc.exists) {
+        bool isImposter =
+            playerDoc.data()!['Character'] == "imposter" ? true : false;
+        return isImposter;
+      } else {
+        // Player document not found, assume player is dead
+        return false;
+      }
+    } catch (e) {
+      // Error occurred while fetching player status
+      print('Error checking player status: $e');
+      return false; // Assume player is dead on error
     }
   }
 

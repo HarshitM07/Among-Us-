@@ -4,6 +4,21 @@ import 'package:among_us2/fetures/signup/screen/signup_page.dart';
 import 'package:among_us2/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: LandingPage(),
+    ),
+  ));
+}
+
 class LandingPage extends StatelessWidget {
   LandingPage({super.key});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -39,7 +54,7 @@ class LandingPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 44,
+                    height: 54,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
@@ -79,9 +94,6 @@ class LandingPage extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromRGBO(17, 24, 40, 1),
                         ),
-                        fixedSize: MaterialStateProperty.all<Size>(
-                          const Size(200, 50), // Change button size here
-                        ),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -107,12 +119,12 @@ class LandingPage extends StatelessWidget {
                                     builder: (ctx) => const ForgotPassWord()));
                           },
                           child: const Text(
-                            'Forget Password?',
+                            'Forgot Password?',
                             style: TextStyle(color: Colors.blue),
                           ))
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   // const Text('Do not have a account ?'),
                   // SizedBox(width: 5), // Adjust the spacing between texts
                   // GestureDetector(
@@ -184,6 +196,9 @@ class LandingPage extends StatelessWidget {
           ),
         ),
         obscureText: isPassword,
+        style: const TextStyle(
+          color: Colors.white,
+        ),
       ),
     );
   }

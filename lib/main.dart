@@ -1,7 +1,8 @@
-import 'package:among_us2/fetures/home/home_screen.dart';
+import 'package:among_us2/fetures/death_screen/dead_screen.dart';
 import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/landing/screen/landing_page.dart';
 import 'package:among_us2/fetures/verify_email/verify_email_screen.dart';
+import 'package:among_us2/fetures/waiting_area/wating_screen.dart';
 import 'package:among_us2/firebase_options.dart';
 import 'package:among_us2/services/firestore_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,9 +55,8 @@ void main() async {
             return const VerifyEmail();
           } else {
             return FutureBuilder<bool>(
-              future: FirestoreServices().isPlayerRegistered(
-                  user.email!), // Pass user's email as parameter
-              builder: (context, snapshot) {
+              future: FirestoreServices().isPlayerRegistered(user.email!),
+              builder: (context, AsyncSnapshot<bool> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator(
                     color: Colors.black,
@@ -69,17 +69,39 @@ void main() async {
                   bool isRegistered = snapshot.data ?? false;
 
                   if (isRegistered) {
-                    FirestoreServices().playerTeam(user.email!).then(
-                      (value) {
-                        return HomeScreen(
-                          teamName: value,
-                        ); // Navigate to HomePage if registered
+                    return FutureBuilder<bool>(
+                      future: FirestoreServices().isPlayerAlive(user.email!),
+                      builder: (context, AsyncSnapshot<bool> aliveSnapshot) {
+                        if (aliveSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            color: Colors.black,
+                          );
+                        } else if (aliveSnapshot.hasError) {
+                          return const Center(
+                            child: Text("Error checking player status"),
+                          );
+                        } else {
+                          bool isAlive = aliveSnapshot.data ?? false;
+
+                          if (isAlive) {
+                            // Player is alive, navigate to HomeScreen
+                            FirestoreServices()
+                                .playerTeam(user.email!)
+                                .then((value) {
+                              return const WaitingScreen();
+                            });
+
+                            return Container();
+                          } else {
+                            // Player is dead, navigate to DeadScreen
+                            return const DeathScreen();
+                          }
+                        }
                       },
                     );
-
-                    return const JoinTeamScreen();
                   } else {
-                    return const JoinTeamScreen(); // Navigate to JoinTeamScreen if not registered
+                    return const JoinTeamScreen();
                   }
                 }
               },

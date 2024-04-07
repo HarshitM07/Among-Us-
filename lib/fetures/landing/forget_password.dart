@@ -2,6 +2,21 @@ import 'package:among_us2/fetures/landing/screen/landing_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: ForgotPassWord(),
+    ),
+  ));
+}
+
 class ForgotPassWord extends StatefulWidget {
   const ForgotPassWord({super.key});
 
@@ -39,7 +54,7 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: size.height * .115),
+                        SizedBox(height: 70),
 
                         /// Verify Text
                         Text(
@@ -62,12 +77,12 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                         /// Roll Number
                         Container(
                           decoration: BoxDecoration(
-                            color:
-                                Colors.white, // Set background color to white
+                            color: const Color.fromRGBO(
+                                45, 54, 81, 1), // Set background color to white
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
+                                color: const Color.fromARGB(158, 0, 0, 0),
                                 spreadRadius: 1,
                                 blurRadius: 2,
                                 offset: const Offset(
@@ -89,8 +104,8 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                                     decoration: const InputDecoration(
                                       labelText: "Email",
                                       labelStyle: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 45, 43, 43)),
+                                          color: Color.fromARGB(
+                                              255, 188, 210, 228)),
                                       border: InputBorder.none,
                                     ),
                                     controller: emailController,
@@ -129,7 +144,7 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                                         Color.fromRGBO(17, 24, 40, 1),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(7.0))),
+                                            BorderRadius.circular(10.0))),
                                 onPressed: () async {
                                   if (formKey.currentState!.validate()) {
                                     final res = await resetPassword();
@@ -144,14 +159,14 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                                   child: SizedBox(
                                     child: FittedBox(
                                       fit: BoxFit.contain,
-                                      child: Text("next",
+                                      child: Text("Next",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headlineMedium!
                                               .apply(
                                                   color: Colors.white,
                                                   fontFamily: 'NimbusMedium',
-                                                  fontSizeFactor: 0.87)),
+                                                  fontSizeFactor: 0.7)),
                                     ),
                                   ),
                                 ),

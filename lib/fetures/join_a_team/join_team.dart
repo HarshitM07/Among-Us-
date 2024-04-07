@@ -65,7 +65,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                   TextField(
                     controller: _playerNameController,
                     decoration: InputDecoration(
-                      hintText: 'Enter your Name here',
+                      hintText: 'Enter your name',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(107, 10, 15, 19),
                       ),
@@ -80,7 +80,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                   TextField(
                     controller: _teamNameController,
                     decoration: InputDecoration(
-                      hintText: 'Enter your Unique Team Name here',
+                      hintText: 'Enter your team name',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(110, 10, 15, 19),
                       ),

@@ -1,9 +1,6 @@
-import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/lobby/randomImposterOrCrewmateGen.dart';
 import 'package:among_us2/fetures/waiting_area/wating_screen.dart';
-import 'package:among_us2/services/firestore_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LobbyScreen extends StatelessWidget {
@@ -32,7 +29,7 @@ class LobbyScreen extends StatelessWidget {
               }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("You need 4 players to Join the game ")));
+                  content: Text("You need 4 players to join the game ")));
             }
           },
           style: ElevatedButton.styleFrom(
@@ -66,21 +63,13 @@ class LobbyScreen extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: null, child: Text("Team Name : $teamName")),
-            ElevatedButton(
-                onPressed: () async {
-                  var res = await FirestoreServices().removePlayerFromTeam(
-                      teamName, FirebaseAuth.instance.currentUser!.email!);
-
-                  if (res == "success") {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (ctx) => const JoinTeamScreen()),
-                        (route) => false);
-                  }
-                },
-                child: const Text("Leave Team")),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: null,
+                child: Text("Team Name : $teamName")),
             StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('Teams')
@@ -115,7 +104,7 @@ class LobbyScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           DocumentSnapshot player = snapshot.data!.docs[index];
                           return Card(
-                            color: const Color.fromRGBO(75, 62, 26, 1),
+                            color: const Color.fromARGB(255, 140, 130, 98),
                             child: ListTile(
                               title: Text(
                                 player['name'],
@@ -126,7 +115,7 @@ class LobbyScreen extends StatelessWidget {
                               subtitle: Text(player['email'],
                                   style: const TextStyle(
                                       color:
-                                          Color.fromARGB(87, 255, 255, 255))),
+                                          Color.fromARGB(142, 255, 255, 255))),
                             ),
                           );
                         },
