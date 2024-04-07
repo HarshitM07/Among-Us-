@@ -5,6 +5,13 @@ import 'package:among_us2/fetures/signup/screen/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+void main(List<String> args) {
+  // Firebase.initializeApp();
+  runApp(const MaterialApp(
+    home: VerifyEmail(),
+  ));
+}
+
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
 

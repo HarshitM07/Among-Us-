@@ -3,6 +3,21 @@ import 'package:among_us2/fetures/verify_email/verify_email_screen.dart';
 import 'package:among_us2/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: SignUp(),
+    ),
+  ));
+}
+
 class SignUp extends StatelessWidget {
   SignUp({
     super.key,
@@ -21,12 +36,12 @@ class SignUp extends StatelessWidget {
                 image: AssetImage("assets/background 2.png"),
                 fit: BoxFit.cover)),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(25.0),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: 200),
+                const SizedBox(height: 190),
                 buildTextFieldWithIcon("Email", Icons.email, (value) {
                   _email = value!;
                 }, (value) {
@@ -152,11 +167,12 @@ class SignUp extends StatelessWidget {
       Function(String?) onChanged, String? Function(String?)? validator) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, // Set background color to white
-        borderRadius: BorderRadius.circular(8),
+        color: const Color.fromRGBO(
+            45, 54, 81, 1), // Set background color to white
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: const Color.fromARGB(158, 0, 0, 0),
             spreadRadius: 1,
             blurRadius: 2,
             offset: const Offset(0, 2), // changes position of shadow
@@ -174,7 +190,8 @@ class SignUp extends StatelessWidget {
                     color: Colors.black), // Set text color to black
                 decoration: InputDecoration(
                   labelText: labelText,
-                  labelStyle: const TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(
+                      color: Color.fromARGB(255, 188, 210, 228)),
                   border: InputBorder.none,
                 ),
                 onChanged: onChanged,
@@ -192,11 +209,12 @@ class SignUp extends StatelessWidget {
       Function(String?) onChanged, String? Function(String?)? validator) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, // Set background color to white
-        borderRadius: BorderRadius.circular(8),
+        color: const Color.fromRGBO(
+            45, 54, 81, 1), // Set background color to white
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.black,
             spreadRadius: 1,
             blurRadius: 2,
             offset: const Offset(0, 2), // changes position of shadow
@@ -214,7 +232,8 @@ class SignUp extends StatelessWidget {
                     color: Colors.black), // Set text color to black
                 decoration: InputDecoration(
                   labelText: labelText,
-                  labelStyle: const TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(
+                      color: Color.fromARGB(255, 188, 210, 228)),
                   border: InputBorder.none,
                 ),
                 obscureText: true,

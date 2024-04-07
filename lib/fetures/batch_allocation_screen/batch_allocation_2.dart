@@ -41,7 +41,7 @@ class BatchAllocationScreen extends StatelessWidget {
 
             Center(
               child: Text(
-                "You are an Imposter",
+                "You are a Crewmate",
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
