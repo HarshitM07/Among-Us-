@@ -1,5 +1,6 @@
 import 'package:among_us2/fetures/lobby/lobby.dart';
 import 'package:among_us2/main.dart';
+import 'package:among_us2/services/firebase_services.dart';
 import 'package:among_us2/services/firestore_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,55 +29,69 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFFF9DB),
+      appBar: AppBar(
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                FirebaseServices().logOut(context);
+              },
+              child: const Text("Logout"))
+        ],
+      ),
+      backgroundColor: const Color.fromRGBO(255, 249, 219, 1),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(45.0),
+              padding: const EdgeInsets.all(35.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Image.asset("assets/NAME YOUR CREW.png"),
+                  const SizedBox(height: 50),
                   Image.asset(
                     "assets/group.png",
-                    height: 200,
+                    height: 170,
                   ),
                   const SizedBox(
-                    height: 18,
+                    height: 40,
                   ),
                   TextField(
                     controller: _playerNameController,
                     decoration: InputDecoration(
-                      hintText: 'Your Name',
+                      hintText: 'Enter your Name here',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(107, 10, 15, 19),
                       ),
                       filled: true,
-                      fillColor: const Color.fromRGBO(228, 223, 174, 1),
+                      fillColor: const Color.fromRGBO(228, 213, 174, 1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
                   TextField(
                     controller: _teamNameController,
                     decoration: InputDecoration(
-                      hintText: 'Team Name (e.g. TattiTeam )',
+                      hintText: 'Enter your Unique Team Name here',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(110, 10, 15, 19),
                       ),
                       filled: true,
-                      fillColor: const Color.fromRGBO(228, 223, 174, 1),
+                      fillColor: const Color.fromRGBO(228, 213, 174, 1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 35),
                   ElevatedButton(
                     onPressed: () async {
                       if (_playerNameController.text.isEmpty ||
@@ -104,7 +119,7 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => LobbyScreen(
-                                teamName: _teamNameController.text,
+                                teamName: _teamNameController.text.trim(),
                               ),
                             ),
                             (route) => true,

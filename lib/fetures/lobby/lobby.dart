@@ -1,6 +1,9 @@
+import 'package:among_us2/fetures/join_a_team/join_team.dart';
 import 'package:among_us2/fetures/lobby/randomImposterOrCrewmateGen.dart';
 import 'package:among_us2/fetures/waiting_area/wating_screen.dart';
+import 'package:among_us2/services/firestore_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LobbyScreen extends StatelessWidget {
@@ -17,7 +20,6 @@ class LobbyScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             if (players == 4) {
-              //TODO
               String res = await RandomImpostorOrCrewmateGen(teamName: teamName)
                   .impostorOrCrewmate();
 
@@ -58,13 +60,27 @@ class LobbyScreen extends StatelessWidget {
             ),
             Image.asset(
               "assets/group.png",
-              height: 200,
+              height: 210,
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             ElevatedButton(
                 onPressed: null, child: Text("Team Name : $teamName")),
+            ElevatedButton(
+                onPressed: () async {
+                  var res = await FirestoreServices().removePlayerFromTeam(
+                      teamName, FirebaseAuth.instance.currentUser!.email!);
+
+                  if (res == "success") {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => const JoinTeamScreen()),
+                        (route) => false);
+                  }
+                },
+                child: const Text("Leave Team")),
             StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('Teams')
@@ -90,7 +106,7 @@ class LobbyScreen extends StatelessWidget {
 
                 players = snapshot.data!.docs.length;
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Expanded(
                     child: SizedBox(
                       height: 400,

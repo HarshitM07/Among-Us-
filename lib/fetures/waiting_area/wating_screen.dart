@@ -16,6 +16,11 @@ class WaitingScreen extends StatelessWidget {
     return StreamBuilder(
       stream: gameStatusInstance,
       builder: (context, snapshot) {
+        if (snapshot.data == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Waiting to connect ....")));
+        }
+
         if (snapshot.data!["status"] == false) {
           return Stack(
             children: [

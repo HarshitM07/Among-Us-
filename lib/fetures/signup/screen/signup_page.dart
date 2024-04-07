@@ -18,9 +18,10 @@ class SignUp extends StatelessWidget {
         height: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/background.png"), fit: BoxFit.cover)),
+                image: AssetImage("assets/background 2.png"),
+                fit: BoxFit.cover)),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -66,11 +67,11 @@ class SignUp extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(17, 24, 40, 1)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -114,30 +115,31 @@ class SignUp extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text('Already have an account ?'),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: double.infinity,
-                  height: 44,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle register logic here
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (ctx) => LandingPage()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already have an account ?'),
+
+                    SizedBox(width: 5), // Adjust the spacing between texts
+                    GestureDetector(
+                      onTap: () {
+                        // Handle navigation to sign-up page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (ctx) => LandingPage()),
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    child: const Text(
-                      'LogIn',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
+                  ],
+                )
               ],
             ),
           ),

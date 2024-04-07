@@ -28,9 +28,10 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
         height: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/background.png"), fit: BoxFit.cover)),
+                image: AssetImage("assets/background 2.png"),
+                fit: BoxFit.cover)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Center(
             child: Form(
               key: formKey,
@@ -38,7 +39,7 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: size.height * .157),
+                        SizedBox(height: size.height * .115),
 
                         /// Verify Text
                         Text(
@@ -47,7 +48,7 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                         ),
                         const Divider(),
 
-                        const SizedBox(height: 17),
+                        const SizedBox(height: 20),
 
                         /// Verify Text
                         Padding(
@@ -63,7 +64,7 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                           decoration: BoxDecoration(
                             color:
                                 Colors.white, // Set background color to white
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -87,7 +88,9 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                                             .black), // Set text color to black
                                     decoration: const InputDecoration(
                                       labelText: "Email",
-                                      labelStyle: TextStyle(color: Colors.grey),
+                                      labelStyle: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 45, 43, 43)),
                                       border: InputBorder.none,
                                     ),
                                     controller: emailController,
@@ -111,6 +114,8 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                         ),
 
                         /// Resent Button
+                        ///
+                        SizedBox(height: 12),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 17.0),
                           child: Center(
@@ -120,7 +125,8 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     // splashFactory: NoSplash.splashFactory,
-                                    backgroundColor: Colors.black,
+                                    backgroundColor:
+                                        Color.fromRGBO(17, 24, 40, 1),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(7.0))),

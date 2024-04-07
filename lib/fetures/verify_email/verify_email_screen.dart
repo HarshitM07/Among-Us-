@@ -75,15 +75,16 @@ class _VerifyEmailState extends State<VerifyEmail> {
         height: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/background.png"), fit: BoxFit.cover)),
+                image: AssetImage("assets/background 2.png"),
+                fit: BoxFit.cover)),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 35),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: size.height * .157),
+                  SizedBox(height: size.height * .260),
 
                   /// Email Image
 
@@ -116,7 +117,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                   // brightness ? Colors.white : Colors.black,
                                   (!canResendEmail)
                                       ? Colors.grey
-                                      : Colors.black,
+                                      : Color.fromRGBO(17, 24, 40, 1),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0))),
                           onPressed: () async {
@@ -128,6 +129,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                 fit: BoxFit.contain,
                                 child: Text(
                                   "Resend",
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -137,7 +139,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 10,
                   ),
 
                   /// Cancel Button
@@ -158,7 +160,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                               side: const BorderSide(
                                   color: Colors.white, width: .7))),
                       child: Text(
-                        "cancel",
+                        "Cancel",
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall!
