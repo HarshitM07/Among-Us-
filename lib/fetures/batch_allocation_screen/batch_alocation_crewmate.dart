@@ -1,5 +1,7 @@
-import 'dart:io';
+import 'dart:async';
 
+import 'package:among_us2/fetures/home/imposter/home_screen.dart';
+import 'package:among_us2/main.dart';
 import 'package:flutter/material.dart';
 
 class BatchAllocationCrewmateScreen extends StatefulWidget {
@@ -12,12 +14,44 @@ class BatchAllocationCrewmateScreen extends StatefulWidget {
 
 class _BatchAllocationCrewmateScreenState
     extends State<BatchAllocationCrewmateScreen> {
+  int _countdown = 10;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_countdown > 0) {
+          _countdown--;
+        } else {
+          _timer.cancel();
+          // Navigate to HomeScreen after countdown
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => HomeScreen(
+                teamName: GlobalteamName,
+              ),
+            ),
+          );
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 249, 219, 1),
-      body: Center(
-        child: Stack(
+        backgroundColor: const Color.fromRGBO(255, 249, 219, 1),
+        body: Stack(
           children: [
             Positioned(
               // Adjust the values below to position "Component 6.png" as desired
@@ -29,23 +63,32 @@ class _BatchAllocationCrewmateScreenState
                 fit: BoxFit.fitWidth,
               ),
             ),
-            // Text widget
-
             Center(
-              child: Text(
-                "You are a Crewmate",
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromRGBO(110, 97, 62, 1),
-                    fontFamily: WebSocket.userAgent),
-                textAlign: TextAlign.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const CircularProgressIndicator(), // Display circular progress indicator
+                  const SizedBox(height: 20),
+                  Text(
+                    '$_countdown', // Show countdown value
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(110, 97, 62, 1),
+                    ),
+                  ),
+                  const Text(
+                    'You are an Crewmate !!', // Show countdown value
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(110, 97, 62, 1),
+                    ),
+                  ),
+                ],
               ),
             ),
-            // Insert more images or widgets as needed
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

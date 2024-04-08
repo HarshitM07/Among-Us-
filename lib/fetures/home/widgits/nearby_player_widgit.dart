@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:among_us2/fetures/home/distance_calculator.dart';
+import 'package:among_us2/services/firestore_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -193,20 +194,48 @@ class _NearbyPlayersListWidgetState extends State<NearbyPlayersListWidget> {
   void handleKillPlayer(String team, String playerId) async {
     if (!isCooldownActive) {
       try {
-        await FirebaseFirestore.instance
-            .collection("Teams")
-            .doc(team)
-            .collection("players")
-            .doc(playerId)
-            .delete();
+        var fireStoreInstance = FirebaseFirestore.instance;
+        bool isImposter =
+            await FirestoreServices().isPlayerAliveImposter(playerId);
+        if (isImposter) {
+          // Imposter wants to delete the entire team
+          await fireStoreInstance
+              .collection("Teams")
+              .doc(team)
+              .collection("players")
+              .doc(playerId)
+              .delete();
+
+          await FirestoreServices().markPlayerAsDead(playerId);
+
+          String? newImposter =
+              await FirestoreServices().getFirstAlivePlayerEmailByTeam(team);
+
+          if (newImposter != null) {
+            await fireStoreInstance
+                .collection("AllPlayers")
+                .doc(newImposter)
+                .update({"Character": "imposter"});
+          }
+        } else {
+          // Non-imposter wants to delete only the player
+          await fireStoreInstance
+              .collection("Teams")
+              .doc(team)
+              .collection("players")
+              .doc(playerId)
+              .delete();
+
+          await FirestoreServices().markPlayerAsDead(playerId);
+        }
 
         setState(() {
           isCooldownActive = true;
-          cooldownEndTime = DateTime.now().add(const Duration(minutes: 5));
+          cooldownEndTime = DateTime.now().add(const Duration(minutes: 0));
           saveCooldownState(true, cooldownEndTime);
         });
       } catch (e) {
-        print("Error removing player: $e");
+        print("Error removing : $e");
       }
     }
   }

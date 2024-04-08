@@ -21,8 +21,11 @@ class LobbyScreen extends StatelessWidget {
                   .impostorOrCrewmate();
 
               if (res == "success") {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => const WaitingScreen()));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (ctx) => const WaitingScreen()),
+                  (route) => false,
+                );
               } else {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(res)));

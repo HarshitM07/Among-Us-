@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:among_us2/core/geolocator_services.dart';
 import 'package:among_us2/fetures/batch_allocation_screen/batch_allocation_imposter.dart';
+import 'package:among_us2/fetures/batch_allocation_screen/batch_alocation_crewmate.dart';
 import 'package:among_us2/firebase_options.dart';
 import 'package:among_us2/main.dart';
 import 'package:among_us2/services/firestore_services.dart';
@@ -102,7 +103,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const BatchAllocationScreen()),
+                      builder: (ctx) => const BatchAllocationCrewmateScreen()),
                   (route) => false);
             }
           });
@@ -111,5 +112,15 @@ class _WaitingScreenState extends State<WaitingScreen> {
         }
       },
     );
+  }
+}
+
+void setTeamName(String email) async {
+  String? teamName = (await FirestoreServices().getTeamNameByEmail(email));
+
+  if (teamName == null) {
+    GlobalteamName = "Null";
+  } else {
+    teamName = teamName;
   }
 }

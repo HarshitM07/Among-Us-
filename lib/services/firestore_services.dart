@@ -47,10 +47,63 @@ class FirestoreServices {
   //     });
 
   //     return "success";
+
   //   } catch (e) {
   //     return "Can't join : $e";
   //   }
   // }
+
+  Future<String?> getTeamNameByEmail(String email) async {
+    try {
+      // Query Firestore to find the player document by email
+      var querySnapshot = await FirebaseFirestore.instance
+          .collection('AllPlayers') // Assuming 'Players' is the collection name
+          .doc(email) // Assuming email is the document ID
+          .get();
+
+      // Check if a player document with the provided email exists
+      if (querySnapshot.exists) {
+        // Extract the 'TeamName' field from the player document
+        var playerData = querySnapshot.data() as Map<String, dynamic>;
+        String teamName = playerData['TeamName'];
+        return teamName;
+      } else {
+        // No player found with the provided email
+        return null; // Return null to indicate no team name found
+      }
+    } catch (e) {
+      // Error occurred while fetching player by email
+      print('Error fetching player by email: $e');
+      return null; // Return null on error
+    }
+  }
+
+  Future<String?> getFirstAlivePlayerEmailByTeam(String teamName) async {
+    try {
+      // Query Firestore to get the first alive player of a specific team
+      var querySnapshot = await FirebaseFirestore.instance
+          .collection('AllPlayers') // Assuming 'Players' is the collection name
+          .where('IsAlive', isEqualTo: true)
+          .where('TeamName', isEqualTo: teamName)
+          .limit(1) // Limit the query to retrieve only the first result
+          .get();
+
+      // Check if any player document was found
+      if (querySnapshot.docs.isNotEmpty) {
+        // Get the first document and extract the email (assuming email is the document ID)
+        var playerDoc = querySnapshot.docs.first;
+        String playerEmail = playerDoc.id; // Assuming email is the document ID
+        return playerEmail;
+      } else {
+        // No alive player found for the specified team
+        return null; // Return null to indicate no player found
+      }
+    } catch (e) {
+      // Error occurred while fetching alive player by team
+      print('Error fetching first alive player by team: $e');
+      return null; // Return null on error
+    }
+  }
 
   Future<bool> isPlayerAlive(String email) async {
     try {
@@ -69,6 +122,21 @@ class FirestoreServices {
       // Error occurred while fetching player status
       print('Error checking player status: $e');
       return false; // Assume player is dead on error
+    }
+  }
+
+  Future<void> markPlayerAsDead(String email) async {
+    try {
+      // Reference the player document in Firestore
+      var playerRef = allplayers.doc(email);
+
+      // Update the 'isAlive' field to false
+      await playerRef.update({'IsAlive': false});
+
+      print('Player marked as dead: $email');
+    } catch (e) {
+      // Error occurred while updating player status
+      print('error marking player as dead : $e');
     }
   }
 

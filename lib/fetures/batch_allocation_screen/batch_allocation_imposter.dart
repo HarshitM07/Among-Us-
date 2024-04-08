@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:among_us2/fetures/home/home_screen.dart';
+import 'package:among_us2/fetures/home/imposter/home_screen.dart';
 import 'package:among_us2/main.dart';
 import 'package:flutter/material.dart';
 
