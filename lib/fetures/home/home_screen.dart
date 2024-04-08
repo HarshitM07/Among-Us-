@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:isolate';
 
 import 'package:among_us2/core/geolocator_services.dart';
 import 'package:among_us2/fetures/death_screen/dead_screen.dart';
@@ -23,12 +24,46 @@ class _HomeScreenState extends State<HomeScreen> {
   var allplayersLocationInstance =
       FirebaseFirestore.instance.collection("Locations");
   late GeolocatorServices geoservices;
+  late ReceivePort _receivePort;
+  late Isolate _mapIsolate;
+  late Isolate _playersListIsolate;
 
   @override
   void initState() {
     geoservices = GeolocatorServices();
-
+    _initIsolates();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _mapIsolate.kill(priority: Isolate.immediate);
+    _playersListIsolate.kill(priority: Isolate.immediate);
+    _receivePort.close();
+    super.dispose();
+  }
+
+  void _initIsolates() {
+    _receivePort = ReceivePort();
+    Timer(
+      Duration.zero,
+      () async {
+        _mapIsolate =
+            await Isolate.spawn(_runMapIsolate, _receivePort.sendPort);
+        _playersListIsolate =
+            await Isolate.spawn(_runPlayersListIsolate, _receivePort.sendPort);
+      },
+    );
+  }
+
+  static void _runMapIsolate(SendPort sendPort) {
+    // Code to run the map on a separate isolate
+    // ...
+  }
+
+  static void _runPlayersListIsolate(SendPort sendPort) {
+    // Code to run the nearby players list on a separate isolate
+    // ...
   }
 
   @override
@@ -57,27 +92,16 @@ class _HomeScreenState extends State<HomeScreen> {
               .doc(FirebaseAuth.instance.currentUser!.email)
               .snapshots(),
           builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            // if (snapshot.connectionState == ConnectionState.waiting) {
-            //   // While data is loading
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
-
             if (snapshot.hasError) {
-              //If any error occurred
               return Center(
                 child: Text('Error: ${snapshot.error}'),
               );
             } else if (!snapshot.hasData || snapshot.data!.data() == null) {
-              // If there is no data available
               return const Center(
                 child: Text('No Data Available'),
               );
             } else {
-              // Data has been successfully loaded
               final data = snapshot.data!.data() as Map<String, dynamic>;
-              // Access your document fields using 'data' map
               if (data["IsAlive"] == true && data["Character"] == "imposter") {
                 Timer.periodic(const Duration(seconds: 5), (timer) async {
                   location = await geoservices.determinePosition();
@@ -93,28 +117,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   elevation: 8,
                   cornerRadius: 16,
                   snapSpec: const SnapSpec(
-                    // Enable snapping. This is true by default.
                     snap: true,
-                    // Set custom snapping points.
                     snappings: [0.1, 0.7, 1.0],
-                    // Define to what the snappings relate to. In this case,
-                    // the total available space that the sheet can expand to.
                     positioning: SnapPositioning.relativeToAvailableSpace,
                   ),
-                  // The body widget will be displayed under the SlidingSheet
-                  // and a parallax effect can be applied to it.
-                  body: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: MapWidgit(),
-                  ),
+                  body: const MapWidget(),
                   builder: (context, state) {
-                    // This is the content of the sheet that will get
-                    // scrolled, if the content is bigger than the available
-                    // height of the sheet.
                     return const SizedBox(
                       height: 500,
                       child: Center(
-                        // content on the sheet
                         child: NearbyPlayersListWidget(),
                       ),
                     );
@@ -126,28 +137,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   elevation: 8,
                   cornerRadius: 16,
                   snapSpec: const SnapSpec(
-                    // Enable snapping. This is true by default.
                     snap: true,
-                    // Set custom snapping points.
                     snappings: [0.1, 0.7, 1.0],
-                    // Define to what the snappings relate to. In this case,
-                    // the total available space that the sheet can expand to.
                     positioning: SnapPositioning.relativeToAvailableSpace,
                   ),
-                  // The body widget will be displayed under the SlidingSheet
-                  // and a parallax effect can be applied to it.
                   body: const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: MapWidgit(),
+                    child: MapWidget(),
                   ),
                   builder: (context, state) {
-                    // This is the content of the sheet that will get
-                    // scrolled, if the content is bigger than the available
-                    // height of the sheet.
                     return const SizedBox(
                       height: 500,
                       child: Center(
-                        // content on the sheet
                         child: Center(
                           child: Text("These are your tasks .........."),
                         ),
@@ -169,43 +170,3 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 }
-
-
-
-
-
-
-
-
-// SlidingSheet(
-//         elevation: 8,
-//         cornerRadius: 16,
-//         snapSpec: const SnapSpec(
-//           // Enable snapping. This is true by default.
-//           snap: true,
-//           // Set custom snapping points.
-//           snappings: [0.1, 0.7, 1.0],
-//           // Define to what the snappings relate to. In this case,
-//           // the total available space that the sheet can expand to.
-//           positioning: SnapPositioning.relativeToAvailableSpace,
-//         ),
-//         // The body widget will be displayed under the SlidingSheet
-//         // and a parallax effect can be applied to it.
-//         body: const Padding(
-//           padding: EdgeInsets.all(16.0),
-//           child: MapWidgit(),
-//         ),
-//         builder: (context, state) {
-//           // This is the content of the sheet that will get
-//           // scrolled, if the content is bigger than the available
-//           // height of the sheet.
-//           return const SizedBox(
-//             height: 500,
-//             child: Center(
-//               // content on the sheet
-//               child: NearbyPlayersListWidget(),
-//             ),
-//           );
-//         },
-//       ),
- 

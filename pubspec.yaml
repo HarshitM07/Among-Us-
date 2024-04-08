@@ -42,6 +42,9 @@ dependencies:
   graphx: ^1.0.12
   cloud_firestore: ^4.16.0
   shared_preferences: ^2.2.2
+  flutter_map: ^4.0.0
+  latlong2: ^0.8.2
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

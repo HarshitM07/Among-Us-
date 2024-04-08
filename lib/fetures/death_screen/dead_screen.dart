@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main(List<String> args) async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -41,23 +40,23 @@ class DeathScreen extends StatelessWidget {
                 height: 350,
               ),
             ),
-            Positioned(
-              left: 83,
-              top: 700,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You are dead...',
-                    style: TextStyle(
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // const Positioned(
+            //   left: 83,
+            //   top: 700,
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Text(
+            //         'You are dead...',
+            //         style: TextStyle(
+            //           fontSize: 38,
+            //           fontWeight: FontWeight.bold,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ));
   }
