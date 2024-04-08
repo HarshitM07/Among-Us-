@@ -35,82 +35,107 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MaterialApp(
-    home: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, AsyncSnapshot<User?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(
-            color: Colors.black,
-          );
-        } else if (snapshot.hasError) {
-          return const Center(
-            child: Text("Something went wrong !!!"),
-          );
-        } else if (snapshot.hasData) {
-          User? user = snapshot.data;
-          bool isEmailVerified = user!.emailVerified;
+  runApp(const MyApp());
+}
 
-          if (!isEmailVerified) {
-            return const VerifyEmail();
-          } else {
-            return FutureBuilder<bool>(
-              future: FirestoreServices().isPlayerRegistered(user.email!),
-              builder: (context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(
-                    color: Colors.black,
-                  );
-                } else if (snapshot.hasError) {
-                  return const Center(
-                    child: Text("Error checking player registration"),
-                  );
-                } else {
-                  bool isRegistered = snapshot.data ?? false;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-                  if (isRegistered) {
-                    return FutureBuilder<bool>(
-                      future: FirestoreServices().isPlayerAlive(user.email!),
-                      builder: (context, AsyncSnapshot<bool> aliveSnapshot) {
-                        if (aliveSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator(
-                            color: Colors.black,
-                          );
-                        } else if (aliveSnapshot.hasError) {
-                          return const Center(
-                            child: Text("Error checking player status"),
-                          );
-                        } else {
-                          bool isAlive = aliveSnapshot.data ?? false;
-
-                          if (isAlive) {
-                            // Player is alive, navigate to HomeScreen
-                            FirestoreServices()
-                                .playerTeam(user.email!)
-                                .then((value) {
-                              return const WaitingScreen();
-                            });
-
-                            return Container();
-                          } else {
-                            // Player is dead, navigate to DeadScreen
-                            return const DeathScreen();
-                          }
-                        }
-                      },
-                    );
-                  } else {
-                    return const JoinTeamScreen();
-                  }
-                }
-              },
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
+          } else if (snapshot.hasError) {
+            return const Scaffold(
+              body: Center(
+                child: Text("Something went wrong!"),
+              ),
+            );
+          } else {
+            User? user = snapshot.data;
+            bool isAuthenticated = user != null;
+
+            if (!isAuthenticated) {
+              return LandingPage();
+            } else {
+              if (!user.emailVerified) {
+                return const VerifyEmail();
+              } else {
+                return FutureBuilder<bool>(
+                  future: FirestoreServices().isPlayerRegistered(user.email!),
+                  builder: (context, AsyncSnapshot<bool> registrationSnapshot) {
+                    if (registrationSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Scaffold(
+                        body: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (registrationSnapshot.hasError) {
+                      return const Scaffold(
+                        body: Center(
+                          child: Text("Error checking player registration"),
+                        ),
+                      );
+                    } else {
+                      bool isRegistered = registrationSnapshot.data ?? false;
+
+                      if (isRegistered) {
+                        return FutureBuilder<bool>(
+                          future:
+                              FirestoreServices().isPlayerAlive(user.email!),
+                          builder:
+                              (context, AsyncSnapshot<bool> aliveSnapshot) {
+                            if (aliveSnapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Scaffold(
+                                body: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            } else if (aliveSnapshot.hasError) {
+                              return const Scaffold(
+                                body: Center(
+                                  child: Text("Error checking player status"),
+                                ),
+                              );
+                            } else {
+                              bool isAlive = aliveSnapshot.data ?? false;
+
+                              if (isAlive) {
+                                addingUser(user.email!);
+                                return const WaitingScreen();
+                              } else {
+                                // Navigate to DeadScreen if player is dead
+                                return const DeathScreen();
+                              }
+                            }
+                          },
+                        );
+                      } else {
+                        // Navigate to JoinTeamScreen if player is not registered
+                        return const JoinTeamScreen();
+                      }
+                    }
+                  },
+                );
+              }
+            }
           }
-        } else {
-          return LandingPage(); // Show LandingPage if user is not authenticated
-        }
-      },
-    ),
-  ));
+        },
+      ),
+    );
+  }
+}
+
+void addingUser(String email) async {
+  GlobalteamName = await FirestoreServices().playerTeam(email);
 }

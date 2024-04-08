@@ -127,10 +127,10 @@ class _NearbyPlayersListWidgetState extends State<NearbyPlayersListWidget> {
                                 .collection("players")
                                 .snapshots(),
                             builder: (context, teamSnapshot) {
-                              if (teamSnapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              }
+                              // if (teamSnapshot.connectionState ==
+                              //     ConnectionState.waiting) {
+                              //   return const CircularProgressIndicator();
+                              // }
 
                               if (teamSnapshot.hasError) {
                                 return Text(

@@ -1,6 +1,9 @@
+import 'dart:async';
+
+import 'package:among_us2/core/geolocator_services.dart';
 import 'package:among_us2/fetures/batch_allocation_screen/batch_allocation_imposter.dart';
-import 'package:among_us2/fetures/batch_allocation_screen/batch_alocation_crewmate.dart';
 import 'package:among_us2/firebase_options.dart';
+import 'package:among_us2/main.dart';
 import 'package:among_us2/services/firestore_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,8 +26,28 @@ void main(List<String> args) async {
   ));
 }
 
-class WaitingScreen extends StatelessWidget {
+class WaitingScreen extends StatefulWidget {
   const WaitingScreen({super.key});
+
+  @override
+  State<WaitingScreen> createState() => _WaitingScreenState();
+}
+
+class _WaitingScreenState extends State<WaitingScreen> {
+  late GeolocatorServices geoservices;
+
+  @override
+  void initState() {
+    geoservices = GeolocatorServices();
+    Timer(
+      Duration.zero,
+      () async {
+        location = await geoservices.determinePosition();
+        print(location);
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +102,7 @@ class WaitingScreen extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const BatchAllocationCrewmateScreen()),
+                      builder: (ctx) => const BatchAllocationScreen()),
                   (route) => false);
             }
           });
